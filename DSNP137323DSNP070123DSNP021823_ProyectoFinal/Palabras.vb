@@ -1,0 +1,43 @@
+﻿Public Class Palabras
+    Private ultimaPalabra = ""
+
+    Public Sub New()
+        Randomize()
+    End Sub
+
+    Dim palabras()() = {
+     New String() {
+    "CASA", "PERRO", "GATO", "MESA", "SOL", "LUNA", "FLOR", "PELOTA", "ARBOL", "AGUA",
+    "SILLA", "LIBRO", "TREN", "MOTO", "COCINA", "PUERTA", "VENTANA", "CALLE", "PLAYA", "AMIGO",
+    "COLOR", "MANO", "NARIZ", "OJO", "PIE", "OREJA", "DIENTE", "PIZZA", "PASTA", "HELADO",
+    "ROPA", "ZAPATO", "CARTA", "DIOS", "BICI", "TURISMO", "PLANTA", "CUADRO", "HORA", "DINERO",
+    "MUSICA", "TELE", "PANTALLA", "CIUDAD", "COLINA", "CAMINO", "FIESTA", "PELO", "MILAGRO", "MARTILLO"},
+    New String() {
+    "ABUELO", "FAMILIA", "LLUVIA", "ESTRELLA", "CARRO", "ESTADIO", "RADIO", "CARNE", "CANCION", "CIELO",
+    "MISTERIO", "PINTURA", "ESPEJO", "HOSPITAL", "SOMBRA", "VENTILADOR", "RELOJ", "NOCHE", "DIA", "OCASION",
+    "CULTURA", "CIGARRILLO", "SERPIENTE", "COCODRILO", "TIGRE", "ELEFANTE", "TORTUGA", "LEOPARDO", "SALSA", "FOTOS",
+    "BIBLIOTECA", "ORDENADOR", "ESCALERA", "NATURALEZA", "CASCADA", "CINE", "ESTUDIANTE", "PROFESOR", "BAILARIN", "CANTANTE",
+    "CELEBRIDAD", "CONCIERTO", "GOBIERNO", "HISTORIA", "VACACIONES", "BODA", "INVITADO", "PAPEL", "ANIMAL", "GUITARRA"},
+    New String() {
+    "QUIMICA", "INVESTIGACION", "ASTRONOMIA", "ELECTRICIDAD", "HIDRODINAMICA", "NEUROCIENCIA", "PSICOLOGIA", "FILOSOFIA", "TECNOLOGIA", "ESPECTACULAR",
+    "DISCIPLINADO", "RESONANCIA", "ANTROPOLOGIA", "BIODIVERSIDAD", "HERMENEUTICA", "PARADIGMATICO", "INCOMPRENSIBLE", "EXTRACORPOREO", "EXTEMPORANEO",
+    "OMNISCIENCIA", "ULTRASONOGRAFIA", "HIPERCONECTIVIDAD", "ANTICONSTITUCIONAL", "PSICOTERAPIA", "INCONTROVERTIBLE", "INMUNOELECTRO", "INTRADUCIBLE",
+    "DESOXIRRIBONUCLEICO", "INDIVIDUALISMO", "ECUMENICIDAD", "HIPERCALORICO", "ULTRACONSERVADOR", "TELEVISUALIZACION", "EXACERBADAMENTE", "REVOLUCIONARIO",
+    "ACCIDENTALIDAD", "INMUNODEFICIENCIA", "HIPERMETAMORFOSIS", "PROBABILISTICO", "TECNOCRACIA", "INTERDISCIPLINARIO", "CATASTROFICO", "INTRATEMBLORES",
+    "BIOMEDICINA", "RETROALIMENTACION", "OBSERVACION", "METACOMUNICACION", "DISCERNIMIENTO", "PARACONSTITUCIONAL", "EXTRANJERIZACION"
+    }
+    }
+
+    Public Function darPalabra(dificultad As SByte) As String
+        Dim posicion As Integer = CInt(Int(((palabras(dificultad).Length - 1) * Rnd())))
+        Dim palabraSeleccionada = palabras(dificultad)(posicion)
+        If palabraSeleccionada.Equals(ultimaPalabra) Then
+            darPalabra(dificultad)
+        Else
+            ultimaPalabra = palabraSeleccionada
+        End If
+        Console.WriteLine(ultimaPalabra)
+        Return ultimaPalabra
+    End Function
+
+End Class
