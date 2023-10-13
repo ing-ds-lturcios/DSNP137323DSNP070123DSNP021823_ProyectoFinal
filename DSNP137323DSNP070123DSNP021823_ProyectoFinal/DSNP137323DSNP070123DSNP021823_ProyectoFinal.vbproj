@@ -156,6 +156,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8_hang.ico" />
+    <None Include="My Project\FinalizarJuego.png" />
+    <None Include="My Project\ReiniciarJuegoDis.png" />
+    <None Include="My Project\ReiniciarJuego.png" />
+    <None Include="My Project\IniciarJuegoDis.png" />
+    <None Include="My Project\IniciarJuego.png" />
     <None Include="My Project\Indicaciones.jpg" />
     <None Include="My Project\Fallo2.png" />
     <None Include="My Project\Fallo1.png" />

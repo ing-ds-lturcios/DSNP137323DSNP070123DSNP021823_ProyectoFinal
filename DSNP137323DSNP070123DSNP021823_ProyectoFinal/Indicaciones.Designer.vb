@@ -27,13 +27,13 @@ Partial Class Indicaciones
         '
         'Button1
         '
-        Me.Button1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.Blue
         Me.Button1.Location = New System.Drawing.Point(532, 304)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(96, 36)
         Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Aceptar"
+        Me.Button1.Text = "ACEPTAR"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Indicaciones
@@ -41,6 +41,7 @@ Partial Class Indicaciones
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = Global.DSNP137323DSNP070123DSNP021823_ProyectoFinal.My.Resources.Resources.Indicaciones
+        Me.CancelButton = Me.Button1
         Me.ClientSize = New System.Drawing.Size(640, 352)
         Me.ControlBox = False
         Me.Controls.Add(Me.Button1)

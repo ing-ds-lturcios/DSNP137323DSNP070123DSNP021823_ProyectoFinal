@@ -3,7 +3,15 @@
     Dim juego As New Juego()
     Dim palabra As String = ""
     Dim prefixEspacio As String = "espacio"
-    Dim prefixTecla As String = "btn"
+    Dim prefixTecla As String = "boton"
+    Dim jugando As Boolean = False
+
+    Private Sub estaJugando(r As Boolean)
+        jugando = r
+        cboNiveles.Enabled = Not (r)
+        iniciarjuego.Visible = Not (r)
+        reiniciarjuego.Visible = r
+    End Sub
 
     Sub construirEspacios()
         For i = 1 To 19
@@ -26,11 +34,13 @@
 
     Sub mostrarEspacios(letras As SByte)
         ocultarEspacios()
+        limpiarTablero_y_Teclado()
         Dim formLabels(letras - 1) As Label
         For i = 0 To (letras - 1)
             formLabels(i) = CType(Me.Controls(prefixEspacio & i + 1), Label)
         Next
         For Each label As Label In formLabels
+            label.Text = "*"
             label.Visible = True
         Next
     End Sub
@@ -70,63 +80,102 @@
     End Sub
 
     Private Sub buscarLetraEnPalabra(letra As String)
-        Dim btn As Button = CType(Me.Controls(prefixTecla + letra), Button)
-        btn.Enabled = False
+        Dim boton As Button = CType(Me.Controls(prefixTecla + letra), Button)
+        If Not boton.Enabled Then
+            Return
+        End If
+        boton.Enabled = False
         If palabra.Contains(letra) Then
-            For i = 1 To palabra.Length - 1
+            For i = 0 To palabra.Length - 1
                 If palabra.Chars(i) = letra Then
                     CType(Me.Controls(prefixEspacio & i + 1), Label).Text = letra
                     juego.incPuntosPorLetra()
+                    juego.incAciertos()
                 End If
             Next
+        Else
+            juego.incFallos()
+            hombre.Image = imagenesFallo.Images(juego.leerFallos() - 1)
         End If
+        verAvance()
     End Sub
     Private Sub Button_Click(ByVal sender As Object, ByVal e As EventArgs)
+        If Not jugando Then
+            Return
+        End If
         Dim this As Button = CType(sender, Button)
         buscarLetraEnPalabra(this.Text)
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        'fallos += 1
-        'Button1.Text = fallos.ToString()
-        Ahorcar()
-    End Sub
-
-    Private Sub Ahorcar()
-        'hombre.Image = imagenesFallo.Images(fallos - 1)
-    End Sub
-
-    Private Sub Ganar()
-        'hombre.Image = imagenesGana.Images(fallos - 1)
-    End Sub
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        'fallos = 0
-        Button1.Text = "Click"
-        Ahorcar()
-    End Sub
-
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        palabra = palabras.darPalabra(cboNiveles.SelectedIndex)
-        mostrarEspacios(palabra.Length)
-    End Sub
-
-    Private Sub Button5_Click(sender As Object, e As EventArgs)
-        Ganar()
+    Private Sub verAvance()
+        actualizaTablero()
+        If juego.leerFallos() = 6 Then
+            MessageBox.Show("Lo siento, perdiste!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            estaJugando(False)
+        End If
+        If juego.leerAciertos() = palabra.Length Then
+            hombre.Image = imagenesGana.Images(juego.leerFallos)
+            juego.incPuntosPorPalabra(cboNiveles.SelectedIndex)
+            juego.incPuntosAcumulados()
+            actualizaTablero()
+            MessageBox.Show("Lo lograste, has ganado!", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            estaJugando(False)
+        End If
     End Sub
 
     Private Sub Jugar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim frmIndicaciones As New Indicaciones
         construirTeclado()
         construirEspacios()
         cboNiveles.SelectedIndex = 0
         cboNiveles.SelectedItem = cboNiveles.SelectedIndex
-        frmIndicaciones.Show()
     End Sub
 
     Private Sub Jugar_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
+        If Not jugando Then
+            Return
+        End If
         If e.KeyValue >= 65 And e.KeyValue <= 90 Then
             buscarLetraEnPalabra(Chr(e.KeyValue))
+        End If
+    End Sub
+
+    Private Sub limpiarTablero_y_Teclado()
+        juego.reiniciaJuego()
+        actualizaTablero()
+        Dim formBotones(25) As Button
+        For i = 0 To 25
+            formBotones(i) = CType(Me.Controls(prefixTecla & Chr(i + 65)), Button)
+        Next
+        For Each boton As Button In formBotones
+            boton.Enabled = True
+        Next
+    End Sub
+
+    Private Sub actualizaTablero()
+        lblErrores.Text = juego.leerFallos().ToString
+        lblAciertos.Text = juego.leerAciertos().ToString
+        lblPuntajeJuego.Text = juego.leerPuntosJuego().ToString()
+        lblPuntajeAcumulado.Text = juego.leerPuntosAcumulados().ToString
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Timer1.Stop()
+        Timer1.Enabled = False
+        Dim frmIndicaciones As New Indicaciones
+        frmIndicaciones.Show()
+    End Sub
+
+    Private Sub iniciarjuego_Click(sender As Object, e As EventArgs) Handles iniciarjuego.Click
+        palabra = palabras.darPalabra(cboNiveles.SelectedIndex)
+        mostrarEspacios(palabra.Length)
+        limpiarTablero_y_Teclado()
+        estaJugando(True)
+    End Sub
+
+    Private Sub finalizarjuego_Click(sender As Object, e As EventArgs) Handles finalizarjuego.Click
+        Dim abandonar = MessageBox.Show("¿Realmente desea salir del juego?", "Salida", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If abandonar = 6 Then
+            Me.Dispose()
         End If
     End Sub
 End Class

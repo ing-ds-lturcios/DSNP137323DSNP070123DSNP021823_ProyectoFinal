@@ -6,6 +6,7 @@
 
     Public Sub incFallos()
         fallos += 1
+        puntosJuego -= 3
     End Sub
 
     Public Sub incAciertos()
