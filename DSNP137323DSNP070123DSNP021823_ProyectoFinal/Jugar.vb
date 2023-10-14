@@ -11,6 +11,7 @@
         cboNiveles.Enabled = Not (r)
         iniciarjuego.Visible = Not (r)
         reiniciarjuego.Visible = r
+        finalizarjuego.Visible = r
     End Sub
 
     Sub construirEspacios()
@@ -60,6 +61,7 @@
         Dim y = (IIf(posicion <= 13, 0, 1) * 50) + 388
         Dim btn As New Button()
         With btn
+            .Enabled = False
             .Image = imagenesAdicionales.Images(0)
             .ImageAlign = ContentAlignment.MiddleCenter
             .Name = prefixTecla + Chr(caracter)
@@ -151,6 +153,20 @@
         Next
     End Sub
 
+    Private Sub terminarJuego()
+        juego.reiniciaJuego()
+        hombre.Image = Nothing
+        actualizaTablero()
+        ocultarEspacios()
+        Dim formBotones(25) As Button
+        For i = 0 To 25
+            formBotones(i) = CType(Me.Controls(prefixTecla & Chr(i + 65)), Button)
+        Next
+        For Each boton As Button In formBotones
+            boton.Enabled = False
+        Next
+    End Sub
+
     Private Sub actualizaTablero()
         lblErrores.Text = juego.leerFallos().ToString
         lblAciertos.Text = juego.leerAciertos().ToString
@@ -166,16 +182,28 @@
     End Sub
 
     Private Sub iniciarjuego_Click(sender As Object, e As EventArgs) Handles iniciarjuego.Click
+        juguemos()
+    End Sub
+
+    Private Sub finalizarjuego_Click(sender As Object, e As EventArgs) Handles finalizarjuego.Click
+        Dim abandonar = MessageBox.Show("¿Desea finalizar este juego?", "Salida", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If abandonar = 6 Then
+            terminarJuego()
+            estaJugando(False)
+        End If
+    End Sub
+
+    Private Sub reiniciarjuego_Click(sender As Object, e As EventArgs) Handles reiniciarjuego.Click
+        Dim reiniciar = MessageBox.Show("Se cargará una nueva palabra" + Chr(13) + "¿Desea reiniciar el juego ahora?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If reiniciar = 6 Then
+            juguemos()
+        End If
+    End Sub
+
+    Private Sub juguemos()
         palabra = palabras.darPalabra(cboNiveles.SelectedIndex)
         mostrarEspacios(palabra.Length)
         limpiarTablero_y_Teclado()
         estaJugando(True)
-    End Sub
-
-    Private Sub finalizarjuego_Click(sender As Object, e As EventArgs) Handles finalizarjuego.Click
-        Dim abandonar = MessageBox.Show("¿Realmente desea salir del juego?", "Salida", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        If abandonar = 6 Then
-            Me.Dispose()
-        End If
     End Sub
 End Class

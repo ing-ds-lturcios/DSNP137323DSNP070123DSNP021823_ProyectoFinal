@@ -44,12 +44,14 @@ Partial Class Jugar
         Me.reiniciarjuego = New System.Windows.Forms.PictureBox()
         Me.reiniciarjuegodis = New System.Windows.Forms.PictureBox()
         Me.finalizarjuego = New System.Windows.Forms.PictureBox()
+        Me.finalizarjuegodis = New System.Windows.Forms.PictureBox()
         CType(Me.hombre, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.iniciarjuego, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.iniciarjuegodis, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.reiniciarjuego, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.reiniciarjuegodis, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.finalizarjuego, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.finalizarjuegodis, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'imagenesFallo
@@ -267,6 +269,19 @@ Partial Class Jugar
         Me.finalizarjuego.Size = New System.Drawing.Size(168, 56)
         Me.finalizarjuego.TabIndex = 54
         Me.finalizarjuego.TabStop = False
+        Me.finalizarjuego.Visible = False
+        '
+        'finalizarjuegodis
+        '
+        Me.finalizarjuegodis.BackColor = System.Drawing.Color.Transparent
+        Me.finalizarjuegodis.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.finalizarjuegodis.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.finalizarjuegodis.Image = Global.DSNP137323DSNP070123DSNP021823_ProyectoFinal.My.Resources.Resources.FinalizarJuegoDis
+        Me.finalizarjuegodis.Location = New System.Drawing.Point(414, 309)
+        Me.finalizarjuegodis.Name = "finalizarjuegodis"
+        Me.finalizarjuegodis.Size = New System.Drawing.Size(168, 56)
+        Me.finalizarjuegodis.TabIndex = 55
+        Me.finalizarjuegodis.TabStop = False
         '
         'Jugar
         '
@@ -290,6 +305,7 @@ Partial Class Jugar
         Me.Controls.Add(Me.Label20)
         Me.Controls.Add(Me.hombre)
         Me.Controls.Add(Me.iniciarjuegodis)
+        Me.Controls.Add(Me.finalizarjuegodis)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -297,13 +313,14 @@ Partial Class Jugar
         Me.MinimizeBox = False
         Me.Name = "Jugar"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "z"
+        Me.Text = "Juego del Ahorcado"
         CType(Me.hombre, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.iniciarjuego, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.iniciarjuegodis, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.reiniciarjuego, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.reiniciarjuegodis, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.finalizarjuego, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.finalizarjuegodis, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -328,4 +345,5 @@ Partial Class Jugar
     Friend WithEvents reiniciarjuego As PictureBox
     Friend WithEvents reiniciarjuegodis As PictureBox
     Friend WithEvents finalizarjuego As PictureBox
+    Friend WithEvents finalizarjuegodis As PictureBox
 End Class
